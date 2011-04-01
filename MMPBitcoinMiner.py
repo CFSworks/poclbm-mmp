@@ -72,6 +72,8 @@ class MMPBitcoinMiner(BitcoinMiner):
 				else:
 					self.diff1Found(bytereverse(h[6]), result['target'][6])
 					if belowOrEquals(h[:7], result['target'][:7]):
+						if result['work'] is None:
+							return
 						d = result['work']['data']
 						d = ''.join([d[:136], pack('I', long(result['data'][1])).encode('hex'), d[144:152], pack('I', long(result['output'][i])).encode('hex')])
 						deferred = self.client.sendResult(d.decode('hex'))
